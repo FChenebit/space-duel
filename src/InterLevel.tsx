@@ -1,12 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { SPlayerShip } from "./gameplay/PlayerShip/entities/SPlayerShip";
 
 const InterLevel = () => {
+  const navigate = useNavigate();
+
+  const playerShip = new SPlayerShip(0, 0, 'player', 0, 0);
   
   return (
     <>
       <h1>INTER LEVEL</h1>
-      <Link to="/game">Game</Link>
+      <button onClick={() => navigate('/game', { state: { playerShip } })}>Game</button>
+      
       <div>
           Welcome on SpaceDuel Inter level
       </div>      
