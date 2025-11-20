@@ -23,6 +23,6 @@ export class GameScene extends Phaser.Scene {
   }
 
   update() {
-    //this.player.angle += 1;
+    this.player.angle += 1;
   }
 }

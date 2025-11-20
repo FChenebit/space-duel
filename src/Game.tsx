@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import StartGame from './phaser/main-phaser'
 
 const Game = () => {
@@ -18,20 +18,16 @@ const Game = () => {
     }, [])
   
   return (
-    <>
-      <h1>Game</h1>
       <div
             id="phaser-game"
             style={{
-              width: `100%`,
-              height: '100%',
-              backgroundColor: 'red',
-              position: 'relative',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
+              display: 'grid',
+              placeItems: 'center',
+              height: '100vh',
+              width: '100vw',
+              backgroundColor: 'black'
             }}
-          ></div>    </>
+          ></div>
   );
 };
 

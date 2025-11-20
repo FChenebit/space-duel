@@ -1,9 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 
-import Home from './Home.jsx';
-import Tutorial from './Tutorial.jsx';
-import InterLevel from './InterLevel.jsx';
-import Game from './Game.jsx';
+import Home from './Home.tsx';
+import Tutorial from './Tutorial.tsx';
+import InterLevel from './InterLevel.tsx';
+import Game from './Game.tsx';
+import React from 'react';
 
 
 const App = () => {
