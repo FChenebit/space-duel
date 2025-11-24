@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import StartGame from './phaser/main-phaser'
 import { useLocation } from "react-router-dom";
-import { SPlayerShip } from './gameplay/PlayerShip/entities/SPlayerShip';
+import { SPlayerShip } from './gameplay/player-ship/entities/SPlayerShip';
 
 const Game = () => {
   const gameRef = useRef<Phaser.Game | null>(null)

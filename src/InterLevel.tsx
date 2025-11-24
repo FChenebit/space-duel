@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { SPlayerShip } from "./gameplay/PlayerShip/entities/SPlayerShip";
+import { SPlayerShip } from "./gameplay/player-ship/entities/SPlayerShip";
 
 const InterLevel = () => {
   const navigate = useNavigate();
