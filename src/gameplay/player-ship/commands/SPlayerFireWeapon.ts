@@ -11,6 +11,10 @@ export const PLAYER_PROJECTILE_WIDTH = 3;
 export const PLAYER_PROJECTILE_HEIGHT = 11;
 export const PLAYER_PROJECTILE_DEPTH = 2;
 
+export interface SPlayerFireWeaponParameter {
+  code: string;
+}
+
 export class SPlayerFireWeapon implements ITKKeyboardControllerCallback {
 
   idGenerator: IIDGenerator;
@@ -23,6 +27,10 @@ export class SPlayerFireWeapon implements ITKKeyboardControllerCallback {
     this.spriteManager = newSpriteManager;
     this.playerShip = newPlayerShipRepository.getPlayerShip();
     this.projectileRepository = newProjectileRepository;
+  }
+  async activate(parameter: object): Promise<void> {
+    const params = parameter as SPlayerFireWeaponParameter;
+    this.onKeyDown(params.code);
   }
   
   onKeyDown(code: string): void {

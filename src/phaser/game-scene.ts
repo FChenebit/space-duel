@@ -18,6 +18,18 @@ import { SSteerPlayerShip } from '../gameplay/player-ship/commands/SSteerPlayerS
 import { SAcceleratePlayerShip } from '../gameplay/player-ship/commands/SAcceleratePlayerShip';
 import { SMoveBackground } from '../gameplay/player-ship/commands/SMoveBackground';
 import { SMovePlayerShip } from '../gameplay/player-ship/commands/SMovePlayerShip';
+import { SIdentifiableRepository } from '../core/adapters/SIdentifiableRepository';
+import { SEnemyShip, SEnemyShipTypeEnum } from '../gameplay/enemy-ship/entities/SEnemyShip';
+import { SNewEnemyShip } from '../gameplay/enemy-ship/commands/SNewEnemyShip';
+import { SProjectile } from '../gameplay/projectile/entity/SProjectile';
+import { SPlayerFireWeapon } from '../gameplay/player-ship/commands/SPlayerFireWeapon';
+import { SDisplayEnemyShip } from '../gameplay/enemy-ship/commands/SDisplayEnemyShip';
+import { SDisplayProjectile } from '../gameplay/projectile/commands/SDisplayProjectile';
+import { SIAEnemyShip } from '../gameplay/enemy-ship/commands/SIAEnemyShip';
+import { SMoveProjectile } from '../gameplay/projectile/commands/SMoveProjectile';
+import { SRemoveProjectile } from '../gameplay/projectile/commands/SRemoveProjectile';
+import { SRemoveEnemyShip } from '../gameplay/enemy-ship/commands/SRemoveEnemyShip';
+import { STestCollision } from '../gameplay/projectile/commands/STestCollision';
 
 export class GameScene extends Phaser.Scene {
   initController: TKController<ITKInitControllerCallback>;
@@ -61,33 +73,39 @@ export class GameScene extends Phaser.Scene {
     const initPlayerShip = new SInitPlayerShip(newPlayerShipRepository,gameW,gameH,this.spriteManager);
     this.initController.addCallback(initPlayerShip);
 
+    const newEnemyShipRepository = new SIdentifiableRepository<SEnemyShip>();
+    const newEnemyShip = new SNewEnemyShip(newEnemyShipRepository, new RandomIDGenerator(), this.spriteManager);
+    //newEnemyShip.execute(-100,0,50,SEnemyShipTypeEnum.DRONE);
+    //newEnemyShip.execute(-100,100,50,SEnemyShipTypeEnum.PREY);
+    newEnemyShip.execute(-100,200,50,Math.PI/16,SEnemyShipTypeEnum.HUNTER);
+
     this.initController.activate({});
 
     const steerPlayerShip = new SSteerPlayerShip(newPlayerShipRepository,gameW,gameW,this.spriteManager);
     this.mouseController.addCallback(steerPlayerShip);
     
     const acceleratePlayerShip = new SAcceleratePlayerShip(newPlayerShipRepository,gameH,this.spriteManager);
-    //const newProjectileRepository = new SIdentifiableRepository<SProjectile>();
-    //const playerFireWeapon = new SPlayerFireWeapon(new RandomIDGenerator(), this.spriteManager, newPlayerShipRepository,
-    // newProjectileRepository);
-    // this.keyboardController.addCallback(playerFireWeapon);
+    const newProjectileRepository = new SIdentifiableRepository<SProjectile>();
+    const playerFireWeapon = new SPlayerFireWeapon(new RandomIDGenerator(), this.spriteManager, newPlayerShipRepository,
+     newProjectileRepository);
+    this.keyboardController.addCallback(playerFireWeapon);
     this.keyboardController.addCallback(acceleratePlayerShip);
 
     const moveBackground = new SMoveBackground(this.spriteManager, gameW, gameH);
-    //const displayEnemyShip = new SDisplayEnemyShip(newEnemyShipRepository, this.spriteManager, gameW, gameH);
-    //const displayProjectile = new SDisplayProjectile(newProjectileRepository, this.spriteManager, gameW, gameH);
-    const moveCallbacks = [moveBackground/*, displayEnemyShip,displayProjectile*/];
+    const displayEnemyShip = new SDisplayEnemyShip(newEnemyShipRepository, this.spriteManager, gameW, gameH);
+    const displayProjectile = new SDisplayProjectile(newProjectileRepository, this.spriteManager, gameW, gameH);
+    const moveCallbacks = [moveBackground, displayEnemyShip,displayProjectile];
 
     const movePlayerShip = new SMovePlayerShip(newPlayerShipRepository,moveCallbacks, this.spriteManager);
-    //const iaEnemyShip = new SIAEnemyShip(newEnemyShipRepository, newPlayerShipRepository);
-    //const moveProjectile = new SMoveProjectile(newProjectileRepository);
-    //const newRemoveProjectile = new SRemoveProjectile(newProjectileRepository, this.spriteManager);
-    //const newRemoveEnemyShip = new SRemoveEnemyShip(newEnemyShipRepository, this.spriteManager);
-    //const testCollision = new STestCollision(newProjectileRepository, newEnemyShipRepository, newRemoveProjectile, newRemoveEnemyShip);
+    const iaEnemyShip = new SIAEnemyShip(newEnemyShipRepository, newPlayerShipRepository);
+    const moveProjectile = new SMoveProjectile(newProjectileRepository);
+    const newRemoveProjectile = new SRemoveProjectile(newProjectileRepository, this.spriteManager);
+    const newRemoveEnemyShip = new SRemoveEnemyShip(newEnemyShipRepository, this.spriteManager);
+    const testCollision = new STestCollision(newProjectileRepository, newEnemyShipRepository, newRemoveProjectile, newRemoveEnemyShip);
     this.updateController.addCallback(movePlayerShip);
-    //this.updateController.addCallback(iaEnemyShip);
-    //this.updateController.addCallback(moveProjectile);
-    //this.updateController.addCallback(testCollision);
+    this.updateController.addCallback(iaEnemyShip);
+    this.updateController.addCallback(moveProjectile);
+    this.updateController.addCallback(testCollision);
 
 
     
