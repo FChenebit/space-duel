@@ -16,7 +16,7 @@ export class TKController<TCallback extends ITKControllerCallback> {
   }
   
   async activate(parameter:object): Promise<void> {
-    await Promise.all(this.callbacks.map(async (callback) => {
+    await Promise.all(this.callbacks.map(async (callback) => {    
       await callback.activate(parameter);
     }));
   }

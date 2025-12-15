@@ -2,7 +2,8 @@ import { SIdentifiableRepository } from "../../../core/adapters/SIdentifiableRep
 import { IIDGenerator } from "../../../core/ports/IIDGenerator";
 import { ITKKeyboardControllerCallback } from "../../../tinker/game-interfaces/TKKeyboarControllerCallbackInterface";
 import { ITKSpriteManager } from "../../../tinker/game-interfaces/TKSpriteManagerInterface";
-import { SProjectile, SProjectileTypeEnum } from "../../projectile/entity/SProjectile";
+import { SProjectile } from "../../projectile/entity/SProjectile";
+import { SFireWeapon } from "../../weapon/commands/SFireWeapon";
 import { SPlayerShipRepository } from "../adapters/SPlayerShipRepository";
 import { SPlayerShip } from "../entities/SPlayerShip";
 
@@ -21,12 +22,20 @@ export class SPlayerFireWeapon implements ITKKeyboardControllerCallback {
   spriteManager: ITKSpriteManager;
   playerShip: SPlayerShip;
   projectileRepository: SIdentifiableRepository<SProjectile>;
+  fireLaser: SFireWeapon;
+  fireMissile: SFireWeapon;
+  fireMine: SFireWeapon;
+
   constructor(newIdGenerator: IIDGenerator, newSpriteManager: ITKSpriteManager, 
           newPlayerShipRepository: SPlayerShipRepository, newProjectileRepository: SIdentifiableRepository<SProjectile>) {
     this.idGenerator = newIdGenerator;
     this.spriteManager = newSpriteManager;
     this.playerShip = newPlayerShipRepository.getPlayerShip();
     this.projectileRepository = newProjectileRepository;
+    this.fireLaser = new SFireWeapon(newIdGenerator, newSpriteManager, newProjectileRepository, this.playerShip.laserWeapon, newPlayerShipRepository.getPlayerShip());
+    this.fireMissile = new SFireWeapon(newIdGenerator, newSpriteManager, newProjectileRepository, this.playerShip.missileWeapon, newPlayerShipRepository.getPlayerShip());
+    this.fireMine = new SFireWeapon(newIdGenerator, newSpriteManager, newProjectileRepository, this.playerShip.mineWeapon, newPlayerShipRepository.getPlayerShip());
+
   }
   async activate(parameter: object): Promise<void> {
     const params = parameter as SPlayerFireWeaponParameter;
@@ -36,13 +45,13 @@ export class SPlayerFireWeapon implements ITKKeyboardControllerCallback {
   onKeyDown(code: string): void {
     console.log('code : in player fire weapon : ' + code + 'expected : KeyW');
     if(code === 'KeyW') {
-     
-      const newRepresentationId = this.spriteManager.newSprite('Projectile', 0, 
-        0, PLAYER_PROJECTILE_WIDTH, PLAYER_PROJECTILE_HEIGHT, PLAYER_PROJECTILE_DEPTH);
-      const newId = this.idGenerator.generate();
-      const newProjectile = new SProjectile(newId, this.playerShip.x, this.playerShip.y,newRepresentationId, PLAYER_PROJECTILE_SPEED, this.playerShip.rotation, SProjectileTypeEnum.PLAYER);
-      this.projectileRepository.add(newProjectile);
-      
+      this.fireLaser.execute();      
+    }
+    if (code === 'KeyE') {
+      this.fireMissile.execute();
+    }
+    if (code === 'KeyR') {
+      this.fireMine.execute();
     }
   }
 }

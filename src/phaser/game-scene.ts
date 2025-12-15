@@ -3,7 +3,9 @@ import backgroundImage from '../assets/Background.png';
 import DroneImage from '../assets/blue_01.png';
 import PreyImage from '../assets/green_06.png';
 import HunterImage from '../assets/purple_03.png';
-import ProjectileImage from '../assets/projectile.png';
+import LaserImage from '../assets/laser.png';
+import MissileImage from '../assets/missile.png';
+import MineImage from '../assets/mine.png';
 
 import { RandomIDGenerator } from '../core/adapters/random-id-generator';
 import { SPlayerShipRepository } from '../gameplay/player-ship/adapters/SPlayerShipRepository';
@@ -30,6 +32,8 @@ import { SMoveProjectile } from '../gameplay/projectile/commands/SMoveProjectile
 import { SRemoveProjectile } from '../gameplay/projectile/commands/SRemoveProjectile';
 import { SRemoveEnemyShip } from '../gameplay/enemy-ship/commands/SRemoveEnemyShip';
 import { STestCollision } from '../gameplay/projectile/commands/STestCollision';
+import { SWeapon } from '../gameplay/weapon/entities/SWeapon';
+import { SReloadAllWeapons } from '../gameplay/weapon/commands/SReloadAllWeapons';
 
 export class GameScene extends Phaser.Scene {
   initController: TKController<ITKInitControllerCallback>;
@@ -58,7 +62,9 @@ export class GameScene extends Phaser.Scene {
     this.load.image('DRONE', DroneImage);
     this.load.image('PREY', PreyImage);
     this.load.image('HUNTER', HunterImage);
-    this.load.image('Projectile', ProjectileImage);
+    this.load.image('Laser', LaserImage);
+    this.load.image('Missile', MissileImage);
+    this.load.image('Mine', MineImage);
 
   }
 
@@ -70,7 +76,8 @@ export class GameScene extends Phaser.Scene {
     console.log('W : ' + gameW + ' H : ' + gameH);
 
     const newPlayerShipRepository = new SPlayerShipRepository();
-    const initPlayerShip = new SInitPlayerShip(newPlayerShipRepository,gameW,gameH,this.spriteManager);
+    const newWeaponRepository = new SIdentifiableRepository<SWeapon>();
+    const initPlayerShip = new SInitPlayerShip(new RandomIDGenerator(), newPlayerShipRepository,gameW,gameH,this.spriteManager, newWeaponRepository);
     this.initController.addCallback(initPlayerShip);
 
     const newEnemyShipRepository = new SIdentifiableRepository<SEnemyShip>();
@@ -102,11 +109,12 @@ export class GameScene extends Phaser.Scene {
     const newRemoveProjectile = new SRemoveProjectile(newProjectileRepository, this.spriteManager);
     const newRemoveEnemyShip = new SRemoveEnemyShip(newEnemyShipRepository, this.spriteManager);
     const testCollision = new STestCollision(newProjectileRepository, newEnemyShipRepository, newRemoveProjectile, newRemoveEnemyShip);
+    const reloadAllWeapons = new SReloadAllWeapons(newWeaponRepository);
     this.updateController.addCallback(movePlayerShip);
     this.updateController.addCallback(iaEnemyShip);
     this.updateController.addCallback(moveProjectile);
     this.updateController.addCallback(testCollision);
-
+    this.updateController.addCallback(reloadAllWeapons);
 
     
     this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {

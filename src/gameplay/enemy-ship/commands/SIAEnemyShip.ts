@@ -91,13 +91,13 @@ export class SIAEnemyShip implements ITKUpdateControllerCallback {
 
       this.moveShip.moveObject(enemyShip, deltaTime);
     });
-    this.elapsedTime += deltaTime;
+/*    this.elapsedTime += deltaTime;
     if(this.elapsedTime > 10000) {
       this.elapsedTime = 0;
       enemyShips.forEach((enemyShip:SEnemyShip) => {
         console.log('enemy ship x ' + enemyShip.x + ' enemy ship y ' + enemyShip.y + ' enemy ship rotation ' + enemyShip.rotation + ' type ' + enemyShip.type  );
       });
-    }
+    }*/
   }
   
 }

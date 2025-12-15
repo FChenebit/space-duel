@@ -39,11 +39,11 @@ export class SMovePlayerShip implements ITKUpdateControllerCallback {
       callback.onPlayerShipMove(this.playerShip.x, this.playerShip.y, deltaX, deltaY);
     })
 
-    this.elapsedTime += deltaTime;
+    /*this.elapsedTime += deltaTime;
     if(this.elapsedTime > 10000) {
       this.elapsedTime = 0;
       console.log('player ship x ' + this.playerShip.x + ' player ship y ' + this.playerShip.y + ' speed ' + this.playerShip.speed + ' rotation ' + this.playerShip.rotation );
-    }
+    }*/
   }
   
 }

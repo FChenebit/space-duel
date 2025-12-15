@@ -25,10 +25,10 @@ export class SMoveProjectile implements ITKUpdateControllerCallback {
     this.projectileRepository.getAll().forEach((projectile: SProjectile) => {
       this.moveProjectile.moveObject(projectile, deltaTime);
     });
-    this.elapsedTime += deltaTime;
+    /*this.elapsedTime += deltaTime;
     if(this.elapsedTime > 10000) {
       this.elapsedTime = 0;
       console.log('projectile count ' + this.projectileRepository.count());
-    }
+    }*/
   }
 }

@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { FixIDGenerator } from "../../../core/adapters/fix-id-generator";
 import { SIdentifiableRepository } from "../../../core/adapters/SIdentifiableRepository";
+import { SFactionTypeEnum } from "../../../core/type/SFaction";
 import { FullSceneCoordinate, ITKSpriteManager } from "../../../tinker/game-interfaces/TKSpriteManagerInterface";
 import { SPlayerShipRepository } from "../../player-ship/adapters/SPlayerShipRepository";
 import { SPlayerShip } from "../../player-ship/entities/SPlayerShip";
+import { SProjectileTypeEnum } from "../../projectile/entity/SProjectile";
+import { SWeapon } from "../../weapon/entities/SWeapon";
 import { SEnemyShip, SEnemyShipTypeEnum } from "../entities/SEnemyShip";
 import { SIAEnemyShip } from "./SIAEnemyShip";
 import { SNewEnemyShip } from "./SNewEnemyShip";
@@ -45,7 +48,9 @@ describe('SIAEnemyShip', () => {
   const newEnemyShip = new SNewEnemyShip(repository, new FixIDGenerator(),new TestSpriteManager());
   newEnemyShip.execute(0,200,0,Math.PI/8,SEnemyShipTypeEnum.HUNTER);
 
-  const newPlayerShip = new SPlayerShip(0, 0, 'TFC',0,0);
+  const newPlayerShip = new SPlayerShip(0, 0, 'TFC',0,0,new SWeapon('1', 100, 20000, 10, 200, SProjectileTypeEnum.LASER, SFactionTypeEnum.PLAYER),
+  new SWeapon('2', 100, 20000, 10, 200, SProjectileTypeEnum.MISSILE, SFactionTypeEnum.PLAYER),
+  new SWeapon('3', 100, 20000, 10, 200, SProjectileTypeEnum.MINE, SFactionTypeEnum.PLAYER));
   playerRepository.setPlayerShip(newPlayerShip);
 
 
