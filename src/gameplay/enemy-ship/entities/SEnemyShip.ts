@@ -1,5 +1,7 @@
+
 import { IIdentifiable } from "../../../core/ports/IIdentifiable";
 import { ISMovingObject } from "../../../core/ports/ISMovingObject";
+import { SFireWeapon } from "../../weapon/commands/SFireWeapon";
 
 export const SEnemyShipTypeEnum = {
   DRONE: 'DRONE',
@@ -20,6 +22,7 @@ export class SEnemyShip implements ISMovingObject, IIdentifiable {
   type: SEnemyShipType;
   rotation: number;
   steering: number;
+  fireWeaponsCommands!: SFireWeapon[];
   
   constructor(newId : string, initialX: number, initialY: number, newRepresentationId: string, 
         newSpeed : number, newType : SEnemyShipType, newSteering : number) {
@@ -31,6 +34,8 @@ export class SEnemyShip implements ISMovingObject, IIdentifiable {
     this.type = newType;
     this.rotation = 0;
     this.steering = newSteering;
+    //this.fireWeaponsCommands = newWeapons.map((weapon: SWeapon) => new SFireWeapon(idGenerator, spriteManager, projectileRepository, weapon, this));
+    this.fireWeaponsCommands = [];
   }
 
 }

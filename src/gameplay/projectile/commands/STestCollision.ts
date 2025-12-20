@@ -1,4 +1,5 @@
 import { SIdentifiableRepository } from "../../../core/adapters/SIdentifiableRepository";
+import { SFactionTypeEnum } from "../../../core/type/SFaction";
 import { ITKUpdateControllerCallback } from "../../../tinker/game-interfaces/TKUpdateControllerCallbackInterface";
 import { SRemoveEnemyShip } from "../../enemy-ship/commands/SRemoveEnemyShip";
 import { ENEMYSHIP_HEIGHT, ENEMYSHIP_WIDTH, SEnemyShip } from "../../enemy-ship/entities/SEnemyShip";
@@ -36,7 +37,8 @@ export class STestCollision implements ITKUpdateControllerCallback {
         if((projectile.x > (enemyShip.x-(ENEMYSHIP_WIDTH*0.45))) && 
             (projectile.x < (enemyShip.x+(ENEMYSHIP_WIDTH*0.45))) &&
             (projectile.y > (enemyShip.y-(ENEMYSHIP_HEIGHT*0.45))) &&
-            (projectile.y < (enemyShip.y+(ENEMYSHIP_HEIGHT*0.45)))) {
+            (projectile.y < (enemyShip.y+(ENEMYSHIP_HEIGHT*0.45))) && 
+            (projectile.faction !== SFactionTypeEnum.ENEMY)) {
           this.removeProjectile.removeProjectile(projectile);
           this.removeEnemyShip.removeEnemyShip(enemyShip);
         }

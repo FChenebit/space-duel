@@ -5,7 +5,7 @@ import { SFactionTypeEnum } from "../../../core/type/SFaction";
 import { FullSceneCoordinate, ITKSpriteManager } from "../../../tinker/game-interfaces/TKSpriteManagerInterface";
 import { SPlayerShipRepository } from "../../player-ship/adapters/SPlayerShipRepository";
 import { SPlayerShip } from "../../player-ship/entities/SPlayerShip";
-import { SProjectileTypeEnum } from "../../projectile/entity/SProjectile";
+import { SProjectile, SProjectileTypeEnum } from "../../projectile/entity/SProjectile";
 import { SWeapon } from "../../weapon/entities/SWeapon";
 import { SEnemyShip, SEnemyShipTypeEnum } from "../entities/SEnemyShip";
 import { SIAEnemyShip } from "./SIAEnemyShip";
@@ -45,7 +45,8 @@ describe('SIAEnemyShip', () => {
     
   }
 
-  const newEnemyShip = new SNewEnemyShip(repository, new FixIDGenerator(),new TestSpriteManager());
+  const newEnemyShip = new SNewEnemyShip(repository, new FixIDGenerator(),new TestSpriteManager(), new SIdentifiableRepository<SWeapon>(),
+     new SIdentifiableRepository<SProjectile>());
   newEnemyShip.execute(0,200,0,Math.PI/8,SEnemyShipTypeEnum.HUNTER);
 
   const newPlayerShip = new SPlayerShip(0, 0, 'TFC',0,0,new SWeapon('1', 100, 20000, 10, 200, SProjectileTypeEnum.LASER, SFactionTypeEnum.PLAYER),
@@ -65,7 +66,7 @@ describe('SIAEnemyShip', () => {
   }
 
   describe('Scenario 0 : Enemy ship x0, y -100, rotation 0', () => {
-    const enemyShip = repository.getById('ID-1')!;    
+    const enemyShip = repository.getById('ID-1')!;
     it('01 - should find a Math.PI/16 rotation', () => {
       testEnemyShipRotation(enemyShip, Math.PI/16, 0, -100, 0);
     });

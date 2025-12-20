@@ -20,10 +20,13 @@ export class SReloadAllWeapons implements ITKUpdateControllerCallback {
   }
   
   async onUpdate(deltaTime: number): Promise<void> {
+    try{
     this.weaponsRepository.getAll().forEach((weapon: SWeapon) => {
-      console.log("Reloading weapon " + weapon.remainingTimeBeforeNextShot);
       weapon.remainingTimeBeforeNextShot -= deltaTime;
       weapon.remainingTimeBeforeNextShot = Math.max(0, weapon.remainingTimeBeforeNextShot);
     });
+    } catch (error) {
+      console.error('Error reloading all weapons: ' + error);
+    }
   }
 }
