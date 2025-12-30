@@ -51,12 +51,14 @@ class MockMovingObject {
   y: number;
   rotation: number;
   speed: number;
+  steering: number;
 
   constructor(x: number, y: number, rotation: number, speed: number) {
     this.x = x;
     this.y = y;
     this.rotation = rotation;
     this.speed = speed;
+    this.steering = 0;
   }
 }
 

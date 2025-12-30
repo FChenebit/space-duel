@@ -3,4 +3,5 @@ export interface ISMovingObject {
   y: number;
   rotation: number;
   speed: number;
+  steering: number;
 }

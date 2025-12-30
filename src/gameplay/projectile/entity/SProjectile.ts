@@ -46,6 +46,7 @@ export class SProjectile implements ISMovingObject, IIdentifiable {
   rotation: number;
   faction: SFactionType;
   type: SProjectileType;
+  steering: number;
 
   constructor(newId: string, initialX: number, initialY: number, newRepresentationId: string,
      initialSpeed: number, initialRotation: number, newFaction: SFactionType, newType: SProjectileType) {
@@ -57,5 +58,6 @@ export class SProjectile implements ISMovingObject, IIdentifiable {
     this.rotation = initialRotation;
     this.faction = newFaction;
     this.type = newType;
+    this.steering = 0;
   }
 }

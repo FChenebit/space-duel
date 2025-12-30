@@ -1,4 +1,5 @@
 import { SIdentifiableRepository } from "../../../core/adapters/SIdentifiableRepository";
+import { SFollowObject } from "../../../core/usecase/SFollowObject";
 import { SMoveObject } from "../../../core/usecase/SMoveObject";
 import { ITKUpdateControllerCallback } from "../../../tinker/game-interfaces/TKUpdateControllerCallbackInterface";
 import { SPlayerShipRepository } from "../../player-ship/adapters/SPlayerShipRepository";
@@ -18,11 +19,13 @@ export class SIAEnemyShip implements ITKUpdateControllerCallback {
   playerShipRepository: SPlayerShipRepository;
   moveShip: SMoveObject;
   elapsedTime: number;
+  followObject: SFollowObject;
   constructor(newEnemyShipRepository: SIdentifiableRepository<SEnemyShip>, newPlayerShipRepository: SPlayerShipRepository) {
     this.enemyShipRepository = newEnemyShipRepository;
     this.playerShipRepository = newPlayerShipRepository;
     this.moveShip = new SMoveObject();
     this.elapsedTime = 0;
+    this.followObject = new SFollowObject();
   }
   async activate(parameter: object): Promise<void> {
     const params = parameter as SIAEnemyShipParameter;
@@ -63,31 +66,10 @@ export class SIAEnemyShip implements ITKUpdateControllerCallback {
         }
       }
       if(enemyShip.type === SEnemyShipTypeEnum.HUNTER) {
-        const angleAxeXToEP =  Math.atan2(distanceY,distanceX*-1)*-1;
-        
-        targetRotation = angleAxeXToEP + Math.PI/2;
-        targetRotation = this.normalizeAngle(targetRotation);
+        targetRotation = this.followObject.computeRotation(enemyShip, playerShip);
       }
 
-      if(this.normalizeAngle(enemyShip.rotation) ===  this.normalizeAngle(targetRotation)) {
-        targetRotation = enemyShip.rotation; // case where target = -PI and rotation = PI or target = PI and rotation = -PI
-      }
-      if(targetRotation === Math.PI && enemyShip.rotation < 0) {
-        targetRotation = -Math.PI;
-      }
-      if(targetRotation === -Math.PI && enemyShip.rotation > 0) {
-        targetRotation = Math.PI;
-      }
-      if (enemyShip.rotation !== targetRotation) {
-        let positiveSteeringAngle = targetRotation - enemyShip.rotation;
-        positiveSteeringAngle = (positiveSteeringAngle < 0 ? positiveSteeringAngle + (Math.PI * 2) : positiveSteeringAngle);
-        const negativeSteeringAngle = -1 * ((Math.PI * 2) - positiveSteeringAngle);
-        const steeringDirection = (Math.abs(negativeSteeringAngle) < positiveSteeringAngle ? -1 : 1);
-        const steering = Math.min(enemyShip.steering,Math.abs(enemyShip.rotation - targetRotation))*steeringDirection*deltaTime/1000;
-        enemyShip.rotation += steering;
-        enemyShip.rotation = this.normalizeAngle(enemyShip.rotation);
-      }
-
+      this.followObject.setSteering(enemyShip, targetRotation, deltaTime);
 
       this.moveShip.moveObject(enemyShip, deltaTime);
     });
