@@ -6,11 +6,15 @@ import { SPlayerShip } from './gameplay/player-ship/entities/SPlayerShip';
 const Game = () => {
   const gameRef = useRef<Phaser.Game | null>(null)
   const location = useLocation();
-  const playerShip = location.state?.playerShip as SPlayerShip;
-  console.log('playerShip', JSON.stringify(playerShip));
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //const playerShip = location.state?.playerShip as SPlayerShip;
+  const curLevel = location.state?.level
+  const curPlayerShipEnhancement = location.state?.playerShipEnhancement
+  //console.log('playerShip', JSON.stringify(playerShip));
     // Initialize Phaser game
   useEffect(() => {
-      gameRef.current = StartGame('phaser-game')
+    //console.log('level in game.tsx' + curLevel);
+    gameRef.current = StartGame('phaser-game',curLevel,curPlayerShipEnhancement)
   
       // Cleanup function
       return () => {

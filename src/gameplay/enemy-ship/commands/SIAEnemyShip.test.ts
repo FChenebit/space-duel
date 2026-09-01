@@ -2,7 +2,7 @@
 import { FixIDGenerator } from "../../../core/adapters/fix-id-generator";
 import { SIdentifiableRepository } from "../../../core/adapters/SIdentifiableRepository";
 import { SFactionTypeEnum } from "../../../core/type/SFaction";
-import { FullSceneCoordinate, ITKSpriteManager } from "../../../tinker/game-interfaces/TKSpriteManagerInterface";
+import { TestSpriteManager } from "../../../mockups/adapters/TestSpriteManager";
 import { SPlayerShipRepository } from "../../player-ship/adapters/SPlayerShipRepository";
 import { SPlayerShip } from "../../player-ship/entities/SPlayerShip";
 import { SProjectile, SProjectileTypeEnum } from "../../projectile/entity/SProjectile";
@@ -15,35 +15,6 @@ describe('SIAEnemyShip', () => {
 
   const repository = new SIdentifiableRepository<SEnemyShip>();
   const playerRepository = new SPlayerShipRepository();
-  class TestSpriteManager implements ITKSpriteManager {
-    
-    newSprite(_newTextureName: string, _newX: number, _newY: number, _newWidth: number, _newHeight: number, _newDepth?: number): string {
-      console.log('creating an enemyShip');
-      return 'ID-2';
-    }
-    removeRepresentation(_representationId: string): void {
-      throw new Error("Method not implemented.");
-    }
-    moveRepresentationToXY(_representationId: string, _newX: number, _newY: number): void {
-      throw new Error("Method not implemented.");
-    }
-    translateRepresentation(_representationId: string, _deltaX: number, _deltaY: number): void {
-      throw new Error("Method not implemented.");
-    }
-    rotateRepresantationToAngle(_representationId: string, _newRotation: number): void {
-      throw new Error("Method not implemented.");
-    }
-    newCircle(_newX: number, _newY: number, _radius: number, _colorFill: number): string {
-      throw new Error("Method not implemented.");
-    }
-    getRepresentationFullSceneCoordinate(_representationId: string): FullSceneCoordinate {
-      throw new Error("Method not implemented.");
-    }
-    newRectangle(_newX: number, _newY: number, _newWidth: number, _newHeight: number, _radius: number, _colorFill: number): string {
-      throw new Error("Method not implemented.");
-    }
-    
-  }
 
   const newEnemyShip = new SNewEnemyShip(repository, new FixIDGenerator(),new TestSpriteManager(), new SIdentifiableRepository<SWeapon>(),
      new SIdentifiableRepository<SProjectile>());

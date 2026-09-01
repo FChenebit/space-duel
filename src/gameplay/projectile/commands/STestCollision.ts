@@ -34,7 +34,7 @@ export class STestCollision implements ITKUpdateControllerCallback {
     const enemyShips = this.enemyShipRepository.getAll();
     projectiles.forEach((projectile) => {
       if(projectile.faction === SFactionTypeEnum.ENEMY) {
-        console.log('test player ship projectile collision');
+        //console.log('test player ship projectile collision');
       } else {
         enemyShips.forEach((enemyShip) => {
           if((projectile.x > (enemyShip.x-(ENEMYSHIP_WIDTH*0.45))) && 

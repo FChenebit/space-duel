@@ -22,10 +22,10 @@ export class SFireWeapon {
 
   execute(): void {
     try{
-    console.log("Firing weapon " + this.weapon.faction + " " + this.weapon.remainingTimeBeforeNextShot);
+    //console.log("Firing weapon " + this.weapon.faction + " " + this.weapon.remainingTimeBeforeNextShot);
 
     if (this.weapon.remainingTimeBeforeNextShot <= 0) {
-      console.log("Firing weapon : " + this.weapon.projectileType);
+      //console.log("Firing weapon : " + this.weapon.projectileType);
       const projectileCharachteristics = ProjectileCharachteristicsByType[this.weapon.projectileType];
       const newRepresentationId = this.spriteManager.newSprite(projectileCharachteristics.textureName, 0, 
         0, projectileCharachteristics.width, projectileCharachteristics.height, projectileCharachteristics.depth);
@@ -33,7 +33,7 @@ export class SFireWeapon {
       const newProjectile = new SProjectile(newId, this.firer.x, this.firer.y,newRepresentationId, this.weapon.projectileSpeed,
          this.firer.rotation,this.weapon.faction, this.weapon.projectileType);
       this.projectileRepository.add(newProjectile);
-      console.log('After firing weapon: ' + this.projectileRepository.count()+ ' projectile id: ' + newProjectile.id);
+      //console.log('After firing weapon: ' + this.projectileRepository.count()+ ' projectile id: ' + newProjectile.id);
       this.weapon.remainingTimeBeforeNextShot = this.weapon.cooldown;
     }
     } catch (error) {

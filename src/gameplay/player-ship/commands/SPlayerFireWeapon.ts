@@ -43,7 +43,7 @@ export class SPlayerFireWeapon implements ITKKeyboardControllerCallback {
   }
   
   onKeyDown(code: string): void {
-    console.log('code : in player fire weapon : ' + code + 'expected : KeyW');
+    //console.log('code : in player fire weapon : ' + code + 'expected : KeyW');
     if(code === 'KeyW') {
       this.fireLaser.execute();      
     }

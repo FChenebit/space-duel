@@ -19,11 +19,11 @@ export class SFireEnemyShip implements ITKUpdateControllerCallback {
   async onUpdate(): Promise<void> {
     this.enemysShipRepository.getAll().forEach((enemyShip: SEnemyShip) => {
       enemyShip.fireWeaponsCommands.forEach((fireWeaponCommand: SFireWeapon) => {
-        console.log("firing weapon for enemy ship " + enemyShip.id);
+        //console.log("firing weapon for enemy ship " + enemyShip.id);
         fireWeaponCommand.execute();
-        console.log("after firing weapon for enemy ship " + enemyShip.id);
+        //console.log("after firing weapon for enemy ship " + enemyShip.id);
       });
     });
-    console.log("after firing weapons for enemy ships, remaining " + this.enemysShipRepository.count());
+    //console.log("after firing weapons for enemy ships, remaining " + this.enemysShipRepository.count());
   }
 }
