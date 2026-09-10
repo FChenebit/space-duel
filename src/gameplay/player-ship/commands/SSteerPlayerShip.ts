@@ -4,8 +4,6 @@ import { SPlayerShipRepository } from "../adapters/SPlayerShipRepository";
 import { SNavigationBar } from "../entities/SNavigationBar";
 import { SPlayerShip } from "../entities/SPlayerShip";
 
-export const MAX_PLAYER_SHIP_STEERING = 0.5;
-
 export interface SSteerPlayerShipParameter {
   x: number;
   y: number;
@@ -35,7 +33,7 @@ export class SSteerPlayerShip implements ITKMouseControllerCallback {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async onMouseMove(newMouseX:number, _newMouseY:number): Promise<void> {
     const reducedX = Math.min(Math.max(newMouseX, this.sceneWidth / 4), this.sceneWidth * 3 / 4)-this.sceneWidth/2;
-    this.playerShip.steering = (reducedX/(this.sceneWidth/4)) * MAX_PLAYER_SHIP_STEERING;
+    this.playerShip.steering = (reducedX/(this.sceneWidth/4)) * this.playerShip.maxSteering;
     const fullCircleCoordinnate = this.spriteManager.getRepresentationFullSceneCoordinate(this.navigationBar.circleRepresentationId);
     this.spriteManager.moveRepresentationToXY(
       this.navigationBar.circleRepresentationId,
