@@ -90,7 +90,8 @@ export class GameScene extends Phaser.Scene {
     const newProjectileRepository = new SIdentifiableRepository<SProjectile>();
     const newEnemyShipRepository = new SIdentifiableRepository<SEnemyShip>();
 
-    const initPlayerShip = new SInitPlayerShip(new RandomIDGenerator(), newPlayerShipRepository,gameW,gameH,this.spriteManager, newWeaponRepository);
+    const initPlayerShip = new SInitPlayerShip(new RandomIDGenerator(), 
+    newPlayerShipRepository,gameW,gameH,this.spriteManager, newWeaponRepository, this.playerEnhancement);
     this.initController.addCallback(initPlayerShip);
     this.initController.activate({});
 
@@ -122,7 +123,7 @@ export class GameScene extends Phaser.Scene {
 
     const movePlayerShip = new SMovePlayerShip(newPlayerShipRepository,moveCallbacks, this.spriteManager);
     const iaEnemyShip = new SIAEnemyShip(newEnemyShipRepository, newPlayerShipRepository);
-    const moveProjectile = new SMoveProjectile(newProjectileRepository);
+    const moveProjectile = new SMoveProjectile(newProjectileRepository,newEnemyShipRepository,newPlayerShipRepository);
     const newRemoveProjectile = new SRemoveProjectile(newProjectileRepository, this.spriteManager);
     const newRemoveEnemyShip = new SRemoveEnemyShip(newEnemyShipRepository, this.spriteManager);
     const testCollision = new STestCollision(newProjectileRepository, newEnemyShipRepository, newRemoveProjectile, newRemoveEnemyShip);

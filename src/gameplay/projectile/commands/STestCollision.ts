@@ -3,8 +3,11 @@ import { SFactionTypeEnum } from "../../../core/type/SFaction";
 import { ITKUpdateControllerCallback } from "../../../tinker/game-interfaces/TKUpdateControllerCallbackInterface";
 import { SRemoveEnemyShip } from "../../enemy-ship/commands/SRemoveEnemyShip";
 import { ENEMYSHIP_HEIGHT, ENEMYSHIP_WIDTH, SEnemyShip } from "../../enemy-ship/entities/SEnemyShip";
-import { SProjectile } from "../entity/SProjectile";
+import { SProjectile, SProjectileTypeEnum } from "../entity/SProjectile";
 import { SRemoveProjectile } from "./SRemoveProjectile";
+
+const NORMAL_RADIUS = 0.45
+const MINE_RADIUS = 4
 
 export interface STestCollisionParameter {
   deltaTime: number;
@@ -37,10 +40,14 @@ export class STestCollision implements ITKUpdateControllerCallback {
         //console.log('test player ship projectile collision');
       } else {
         enemyShips.forEach((enemyShip) => {
-          if((projectile.x > (enemyShip.x-(ENEMYSHIP_WIDTH*0.45))) && 
-              (projectile.x < (enemyShip.x+(ENEMYSHIP_WIDTH*0.45))) &&
-              (projectile.y > (enemyShip.y-(ENEMYSHIP_HEIGHT*0.45))) &&
-              (projectile.y < (enemyShip.y+(ENEMYSHIP_HEIGHT*0.45))) && 
+          let radius = NORMAL_RADIUS;
+          if(projectile.type === SProjectileTypeEnum.MINE) {
+            radius = MINE_RADIUS;
+          }
+          if((projectile.x > (enemyShip.x-(ENEMYSHIP_WIDTH*radius))) && 
+              (projectile.x < (enemyShip.x+(ENEMYSHIP_WIDTH*radius))) &&
+              (projectile.y > (enemyShip.y-(ENEMYSHIP_HEIGHT*radius))) &&
+              (projectile.y < (enemyShip.y+(ENEMYSHIP_HEIGHT*radius))) && 
               (projectile.faction !== SFactionTypeEnum.ENEMY)) {
             this.removeProjectile.removeProjectile(projectile);
             this.removeEnemyShip.removeEnemyShip(enemyShip);

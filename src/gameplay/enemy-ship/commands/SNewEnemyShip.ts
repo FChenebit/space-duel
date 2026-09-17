@@ -36,11 +36,13 @@ export class SNewEnemyShip {
     this.weaponRepository.add(missile);
     this.weaponRepository.add(mine);
 
-    const newEnemyShip = new SEnemyShip(newId, initialX, initialY, newRepresentationId, newSpeed, newType,newSteering);
+    const newEnemyShip = new SEnemyShip(newId, initialX, initialY, newRepresentationId,
+       newSpeed, newType,newSteering);
     this.enemyShipRepository.add(newEnemyShip);
     
     try{
-      const fireMissileCommand = new SFireWeapon(this.idGenerator, this.spriteManager, this.projectileRepository, missile, newEnemyShip);
+      const fireMissileCommand = new SFireWeapon(this.idGenerator, this.spriteManager, 
+        this.projectileRepository, missile, newEnemyShip);
       newEnemyShip.fireWeaponsCommands.push(fireMissileCommand);
       /* Future: add mine and laser commands when needed
       const fireMineCommand = new SFireWeapon(this.idGenerator, this.spriteManager, this.projectileRepository, mine, newEnemyShip);

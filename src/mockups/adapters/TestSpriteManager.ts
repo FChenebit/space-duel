@@ -3,7 +3,7 @@ import { FullSceneCoordinate, ITKSpriteManager } from "../../tinker/game-interfa
 export class TestSpriteManager implements ITKSpriteManager {
     
     newSprite(_newTextureName: string, _newX: number, _newY: number, _newWidth: number, _newHeight: number, _newDepth?: number): string {
-      console.log('creating an enemyShip');
+      //console.log('creating an enemyShip');
       return 'ID-2';
     }
     removeRepresentation(_representationId: string): void {

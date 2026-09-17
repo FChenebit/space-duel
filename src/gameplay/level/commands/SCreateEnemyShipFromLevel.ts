@@ -13,12 +13,12 @@ const HUNTER_STEERING = Math.PI / 12;
 
 export class SCreateEnemyShipFromLevel {
   execute(curLevel: number, newEnemyShip: SNewEnemyShip) {
-    let getEnemyByLevel = new SGetEnemyByLevel();
-    let enemyTypeCount: SEnemyTypeCount = getEnemyByLevel.execute(curLevel);
+    const getEnemyByLevel = new SGetEnemyByLevel();
+    const enemyTypeCount: SEnemyTypeCount = getEnemyByLevel.execute(curLevel);
 
     for (let iteDrone = 0; iteDrone < enemyTypeCount.droneCount; iteDrone++) {
-      let ring = Math.trunc(iteDrone / 4);
-      let position = iteDrone - (ring * 4);
+      const ring = Math.trunc(iteDrone / 4);
+      const position = iteDrone - (ring * 4);
       let droneX = 0;
       let droneY = 0;
       switch (position) {
@@ -48,8 +48,8 @@ export class SCreateEnemyShipFromLevel {
     }
 
     for (let itePrey = 0; itePrey < enemyTypeCount.preyCount; itePrey++) {
-      let ring = Math.trunc(itePrey / 2);
-      let position = itePrey - (ring * 2);
+      const ring = Math.trunc(itePrey / 2);
+      const position = itePrey - (ring * 2);
       let preyX = 0;
       let preyY = 0;
 
@@ -73,8 +73,8 @@ export class SCreateEnemyShipFromLevel {
     }
 
     for (let iteHunter = 0; iteHunter < enemyTypeCount.hunterCount; iteHunter++) {
-      let ring = Math.trunc(iteHunter / 2);
-      let position = iteHunter - (ring * 2);
+      const ring = Math.trunc(iteHunter / 2);
+      const position = iteHunter - (ring * 2);
       let hunterX = 0;
       let hunterY = 0;
 

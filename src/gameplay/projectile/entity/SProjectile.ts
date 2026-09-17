@@ -58,6 +58,6 @@ export class SProjectile implements ISMovingObject, IIdentifiable {
     this.rotation = initialRotation;
     this.faction = newFaction;
     this.type = newType;
-    this.steering = 0;
+    this.steering = Math.PI/8;
   }
 }

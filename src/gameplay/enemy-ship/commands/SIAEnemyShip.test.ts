@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { FixIDGenerator } from "../../../core/adapters/fix-id-generator";
 import { SIdentifiableRepository } from "../../../core/adapters/SIdentifiableRepository";
 import { SFactionTypeEnum } from "../../../core/type/SFaction";
