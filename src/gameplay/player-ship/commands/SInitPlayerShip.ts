@@ -54,7 +54,8 @@ export class SInitPlayerShip implements ITKInitControllerCallback {
   }
 
   async onInit(): Promise<void> {
-    const newRepresentationID = this.spriteManager.newSprite('PlayerShip',this.sceneWidth/2,this.sceneHeight/2,PLAYER_SHIP_SIZE,PLAYER_SHIP_SIZE);
+    const newRepresentationID = this.spriteManager.newSprite('PlayerShip',this.sceneWidth/2,this.sceneHeight/2,
+        PLAYER_SHIP_SIZE,PLAYER_SHIP_SIZE);
     const laser = new SWeapon(this.idGenerator.generate(), 100, LASER_RANGE+this.playerShipEnhancement.laserRange,
      LASER_COOLDOWN+this.playerShipEnhancement.laserCooldown, LASER_SPEED+this.playerShipEnhancement.laserSpeed,
       SProjectileTypeEnum.LASER, SFactionTypeEnum.PLAYER);

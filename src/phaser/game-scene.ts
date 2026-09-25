@@ -143,13 +143,15 @@ export class GameScene extends Phaser.Scene {
     const moveProjectile = new SMoveProjectile(newProjectileRepository,newEnemyShipRepository,newPlayerShipRepository);
     const newRemoveProjectile = new SRemoveProjectile(newProjectileRepository, this.spriteManager);
     const newRemoveEnemyShip = new SRemoveEnemyShip(newEnemyShipRepository, this.spriteManager);
-    const testCollision = new STestCollision(newProjectileRepository, newEnemyShipRepository, newRemoveProjectile, newRemoveEnemyShip);
-    const reloadAllWeapons = new SReloadAllWeapons(newWeaponRepository);
-    const fireEnemyShip = new SFireEnemyShip(newEnemyShipRepository);
-    const computeFPS = new UComputeFPS();
     const quitGame = new SQuitGame(this.navigator);
     const gameOver = new SGameOver(quitGame,this.spriteManager,gameW,gameH,this.updateController);
     const reduceTimer = new SReduceTimer(newRoundRepository,this.spriteManager,gameOver);
+    const testCollision = new STestCollision(newProjectileRepository, newEnemyShipRepository,
+      newPlayerShipRepository, gameOver,
+      newRemoveProjectile, newRemoveEnemyShip);
+    const reloadAllWeapons = new SReloadAllWeapons(newWeaponRepository);
+    const fireEnemyShip = new SFireEnemyShip(newEnemyShipRepository);
+    const computeFPS = new UComputeFPS();
     this.updateController.addCallback(movePlayerShip);
     this.updateController.addCallback(iaEnemyShip);
     this.updateController.addCallback(moveProjectile);

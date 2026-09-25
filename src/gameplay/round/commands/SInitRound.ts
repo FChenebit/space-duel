@@ -3,8 +3,8 @@ import { ITKSpriteManager } from "../../../tinker/game-interfaces/TKSpriteManage
 import { SRoundRepository } from "../adapters/SRoundRepository";
 import { STimer } from "../entities/STimer";
 
-//const ROUND_DURATION = 180000; // 3 min in ms
-const ROUND_DURATION = 10000; // 3 min in ms
+const ROUND_DURATION = 180000; // 3 min in ms
+//const ROUND_DURATION = 10000; // 3 min in ms
 const TIMER_DISPLAY_Y = 50;
 
 export class SInitRound implements ITKInitControllerCallback {
