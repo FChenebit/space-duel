@@ -38,6 +38,12 @@ import { SFireEnemyShip } from '../gameplay/enemy-ship/commands/SFireEnemyShip';
 import { UComputeFPS } from '../utils/commands/UComputeFPS';
 import { SCreateEnemyShipFromLevel } from '../gameplay/level/commands/SCreateEnemyShipFromLevel';
 import { SPlayerShipEnhancement } from '../gameplay/player-ship/entities/SPlayerShipEnhancement';
+import { SInitRound } from '../gameplay/round/commands/SInitRound';
+import { SRoundRepository } from '../gameplay/round/adapters/SRoundRepository';
+import { SReduceTimer } from '../gameplay/round/commands/SReduceTimer';
+import { NavigateFunction } from 'react-router-dom';
+import { SQuitGame } from '../gameplay/round/commands/SQuitGame';
+import { SGameOver } from '../gameplay/round/commands/SGameOver';
 
 export class GameScene extends Phaser.Scene {
   initController: TKController<ITKInitControllerCallback>;
@@ -47,8 +53,9 @@ export class GameScene extends Phaser.Scene {
   keyboardController: TKController<ITKKeyboardControllerCallback>;
   level: number;
   playerEnhancement: SPlayerShipEnhancement;
+  navigator: NavigateFunction
 
-  constructor(curLevel: number,curPlayerEnhancement:SPlayerShipEnhancement) {
+  constructor(curLevel: number,curPlayerEnhancement:SPlayerShipEnhancement,newNavigator: NavigateFunction) {
     console.log('level in scene constructor ' + curLevel);
     super({key:'GameScence'});
     this.initController = new TKController<ITKInitControllerCallback>();
@@ -58,6 +65,7 @@ export class GameScene extends Phaser.Scene {
     this.spriteManager = new TKSpriteManager(new RandomIDGenerator(),this);
     this.level = curLevel;
     this.playerEnhancement = curPlayerEnhancement;
+    this.navigator = newNavigator;
   }
 
 
@@ -86,6 +94,7 @@ export class GameScene extends Phaser.Scene {
     //console.log('level ' + this.level);
 
     const newPlayerShipRepository = new SPlayerShipRepository();
+    const newRoundRepository = new SRoundRepository();
     const newWeaponRepository = new SIdentifiableRepository<SWeapon>();
     const newProjectileRepository = new SIdentifiableRepository<SProjectile>();
     const newEnemyShipRepository = new SIdentifiableRepository<SEnemyShip>();
@@ -93,6 +102,14 @@ export class GameScene extends Phaser.Scene {
     const initPlayerShip = new SInitPlayerShip(new RandomIDGenerator(), 
     newPlayerShipRepository,gameW,gameH,this.spriteManager, newWeaponRepository, this.playerEnhancement);
     this.initController.addCallback(initPlayerShip);
+    const initRound = new SInitRound(newRoundRepository,this.spriteManager, gameW);
+    this.initController.addCallback(initRound);
+    
+    /*this.spriteManager.newText('TFCTFC', gameW/2,50,{
+      fontSize: '32px',
+      color: '#ffffff'
+    });*/
+
     this.initController.activate({});
 
     //console.log('Creating enemy ship');
@@ -130,6 +147,9 @@ export class GameScene extends Phaser.Scene {
     const reloadAllWeapons = new SReloadAllWeapons(newWeaponRepository);
     const fireEnemyShip = new SFireEnemyShip(newEnemyShipRepository);
     const computeFPS = new UComputeFPS();
+    const quitGame = new SQuitGame(this.navigator);
+    const gameOver = new SGameOver(quitGame,this.spriteManager,gameW,gameH,this.updateController);
+    const reduceTimer = new SReduceTimer(newRoundRepository,this.spriteManager,gameOver);
     this.updateController.addCallback(movePlayerShip);
     this.updateController.addCallback(iaEnemyShip);
     this.updateController.addCallback(moveProjectile);
@@ -137,6 +157,7 @@ export class GameScene extends Phaser.Scene {
     this.updateController.addCallback(reloadAllWeapons);
     this.updateController.addCallback(fireEnemyShip);
     this.updateController.addCallback(computeFPS);
+    this.updateController.addCallback(reduceTimer);
     
     this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
       this.mouseController.activate(pointer);

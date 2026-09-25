@@ -18,9 +18,20 @@ class MockSpriteManager implements ITKSpriteManager {
     return `sprite-${this.spriteIdCounter}`;
   }
 
+  newText(_newText:string, _newX:number, _newY:number, 
+      _newStyle:Phaser.Types.GameObjects.Text.TextStyle):string {
+      throw new Error("Method not implemented.");
+  }
+
+
   removeRepresentation(_representationId: string): void {
     // Mock implementation - do nothing
   }
+
+  changeRepresentationText(_representationId: string, _newText: string): void {
+    throw new Error("Method not implemented.");
+  }
+
 
   moveRepresentationToXY(_representationId: string, _newX: number, _newY: number): void {
     // Mock implementation - do nothing

@@ -2,12 +2,14 @@
 import { FixIDGenerator } from "../../../core/adapters/fix-id-generator";
 import { SIdentifiableRepository } from "../../../core/adapters/SIdentifiableRepository";
 import { SFactionTypeEnum } from "../../../core/type/SFaction";
-import { FullSceneCoordinate, ITKSpriteManager } from "../../../tinker/game-interfaces/TKSpriteManagerInterface";
+//import { FullSceneCoordinate, ITKSpriteManager } from "../../../tinker/game-interfaces/TKSpriteManagerInterface";
 import { SProjectile, SProjectileTypeEnum } from "../../projectile/entity/SProjectile";
 import { SWeapon } from "../entities/SWeapon";
 import { SFireWeapon } from "./SFireWeapon";
+import { TestSpriteManager } from "../../../mockups/adapters/TestSpriteManager";
 
-class MockSpriteManager implements ITKSpriteManager {
+
+/*class MockSpriteManager implements ITKSpriteManager {
   private spriteIdCounter = 0;
 
   newSprite(_newTextureName: string, _newX: number, _newY: number, _newWidth: number, _newHeight: number, _newDepth?: number): string {
@@ -44,7 +46,7 @@ class MockSpriteManager implements ITKSpriteManager {
     this.spriteIdCounter++;
     return `rectangle-${this.spriteIdCounter}`;
   }
-}
+}*/
 
 class MockMovingObject {
   x: number;
@@ -64,7 +66,7 @@ class MockMovingObject {
 
 describe('SFireWeapon', () => {
   let idGenerator: FixIDGenerator;
-  let spriteManager: MockSpriteManager;
+  let spriteManager: TestSpriteManager;
   let projectileRepository: SIdentifiableRepository<SProjectile>;
   let weapon: SWeapon;
   let firer: MockMovingObject;
@@ -72,7 +74,7 @@ describe('SFireWeapon', () => {
 
   beforeEach(() => {
     idGenerator = new FixIDGenerator();
-    spriteManager = new MockSpriteManager();
+    spriteManager = new TestSpriteManager();
     projectileRepository = new SIdentifiableRepository<SProjectile>();
     weapon = new SWeapon('weapon-1', 50, 1000, 1000, 200, SProjectileTypeEnum.LASER, SFactionTypeEnum.PLAYER);
     firer = new MockMovingObject(100, 200, Math.PI / 4, 150);
@@ -101,7 +103,7 @@ describe('SFireWeapon', () => {
       expect(createdProjectile.faction).toBe(weapon.faction);
       expect(createdProjectile.type).toBe(weapon.projectileType);
       expect(createdProjectile.speed).toBe(weapon.projectileSpeed);
-      expect(createdProjectile.representationId).toBe('sprite-1');
+      expect(createdProjectile.representationId).toBe('ID-2');
     });
 
     it('should fire weapon when cooldown is negative', () => {
@@ -192,8 +194,8 @@ describe('SFireWeapon', () => {
       expect(projectileRepository.count()).toBe(2);
       expect(firstProjectile.id).toBe('ID-1');
       expect(secondProjectile.id).toBe('ID-2');
-      expect(firstProjectile.representationId).toBe('sprite-1');
-      expect(secondProjectile.representationId).toBe('sprite-2');
+      expect(firstProjectile.representationId).toBe('ID-2');
+      expect(secondProjectile.representationId).toBe('ID-2');
     });
 
     it('should set correct cooldown after firing', () => {

@@ -1,6 +1,7 @@
 import { Game } from "phaser";
 import { GameScene } from "./game-scene";
 import { SPlayerShipEnhancement } from "../gameplay/player-ship/entities/SPlayerShipEnhancement";
+import { NavigateFunction } from "react-router-dom";
 
 /*const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -16,7 +17,7 @@ import { SPlayerShipEnhancement } from "../gameplay/player-ship/entities/SPlayer
 
 
 
-const StartGame = (parent: string, level: number, playerEnhancement: SPlayerShipEnhancement) => {
+const StartGame = (parent: string, level: number, playerEnhancement: SPlayerShipEnhancement, navigator: NavigateFunction) => {
 
   //console.log('level in StartGame ' + level);
 
@@ -29,7 +30,7 @@ const StartGame = (parent: string, level: number, playerEnhancement: SPlayerShip
     mode: Phaser.Scale.FIT,
   },
   backgroundColor: '#000000',
-  scene: new GameScene(level,playerEnhancement)
+  scene: new GameScene(level,playerEnhancement,navigator)
 };
 
 

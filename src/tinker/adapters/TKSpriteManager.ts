@@ -39,8 +39,8 @@ class RectangleRepresentation {
   }
 }
 
-
-type Representation = Phaser.GameObjects.Image | CircleRepresentation | RectangleRepresentation;
+type Representation = Phaser.GameObjects.Image | CircleRepresentation | 
+  RectangleRepresentation | Phaser.GameObjects.Text;
 
 export class TKSpriteManager implements ITKSpriteManager {
 
@@ -69,10 +69,31 @@ export class TKSpriteManager implements ITKSpriteManager {
     return newId;
 
   }
+
+  newText(newText:string, newX:number, newY:number, 
+      newStyle:Phaser.Types.GameObjects.Text.TextStyle):string {
+          
+    const newId = this.idGenerator.generate();
+    const newPhaserText = this.scene.add.text(newX,newY,newText,newStyle);
+    newPhaserText.setOrigin(0.5,0.5);
+    this.representationsById[newId] = newPhaserText;
+
+    return newId;      
+
+  }
+
+  changeRepresentationText(representationId: string, newText: string) {
+      const representation = this.representationsById[representationId];
+      if ( representation instanceof Phaser.GameObjects.Text) {
+        representation.text = newText;
+      }
+  }
+
   
   removeRepresentation(representationId: string): void {
     const representation = this.representationsById[representationId];
-    if (representation instanceof Phaser.GameObjects.Image) {
+    if (representation instanceof Phaser.GameObjects.Image || 
+      representation instanceof Phaser.GameObjects.Text) {
       representation.destroy();
     }
     if (representation instanceof CircleRepresentation) {
@@ -110,14 +131,16 @@ export class TKSpriteManager implements ITKSpriteManager {
 
   rotateRepresantationToAngle(representationId: string, newRotation: number): void {
     const representation = this.representationsById[representationId];
-    if (representation instanceof Phaser.GameObjects.Image){
+    if (representation instanceof Phaser.GameObjects.Image || 
+      representation instanceof Phaser.GameObjects.Text){
       representation.rotation = newRotation;
     }
   }
 
   moveRepresentationToXY(representationId:string, newX:number, newY:number):void {
     const representation = this.representationsById[representationId];
-    if(representation instanceof Phaser.GameObjects.Image) {
+    if(representation instanceof Phaser.GameObjects.Image || 
+        representation instanceof Phaser.GameObjects.Text){
       representation.x = newX;
       representation.y = newY;
       return;
@@ -151,7 +174,8 @@ export class TKSpriteManager implements ITKSpriteManager {
 
   getRepresentationFullSceneCoordinate(representationId: string): FullSceneCoordinate {
     const representation = this.representationsById[representationId];
-    if (representation instanceof Phaser.GameObjects.Image) {
+    if (representation instanceof Phaser.GameObjects.Image || 
+        representation instanceof Phaser.GameObjects.Text){
       return { x: representation.x, y: representation.y, width: representation.width, height: representation.height };
     }
     if (representation instanceof CircleRepresentation) {

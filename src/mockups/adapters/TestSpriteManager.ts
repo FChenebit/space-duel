@@ -6,6 +6,15 @@ export class TestSpriteManager implements ITKSpriteManager {
       //console.log('creating an enemyShip');
       return 'ID-2';
     }
+    newText(_newText:string, _newX:number, _newY:number, 
+      _newStyle:Phaser.Types.GameObjects.Text.TextStyle):string {
+      throw new Error("Method not implemented.");
+    }
+
+    changeRepresentationText(_representationId: string, _newText: string): void {
+      throw new Error("Method not implemented.");
+    }
+
     removeRepresentation(_representationId: string): void {
       throw new Error("Method not implemented.");
     }
@@ -22,7 +31,7 @@ export class TestSpriteManager implements ITKSpriteManager {
       throw new Error("Method not implemented.");
     }
     getRepresentationFullSceneCoordinate(_representationId: string): FullSceneCoordinate {
-      throw new Error("Method not implemented.");
+      return { x: 0, y: 0, width: 10, height: 10 };
     }
     newRectangle(_newX: number, _newY: number, _newWidth: number, _newHeight: number, _radius: number, _colorFill: number): string {
       throw new Error("Method not implemented.");

@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import StartGame from './phaser/main-phaser'
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 //import { SPlayerShip } from './gameplay/player-ship/entities/SPlayerShip';
 
 const Game = () => {
   const gameRef = useRef<Phaser.Game | null>(null)
+  const navigator = useNavigate();
   const location = useLocation();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   //const playerShip = location.state?.playerShip as SPlayerShip;
@@ -14,7 +15,7 @@ const Game = () => {
     // Initialize Phaser game
   useEffect(() => {
     //console.log('level in game.tsx' + curLevel);
-    gameRef.current = StartGame('phaser-game',curLevel,curPlayerShipEnhancement)
+    gameRef.current = StartGame('phaser-game',curLevel,curPlayerShipEnhancement,navigator)
   
       // Cleanup function
       return () => {
