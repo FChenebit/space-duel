@@ -11,13 +11,16 @@ export interface SMovePlayerShipParameter {
 
 export class SMovePlayerShip implements ITKUpdateControllerCallback {
 
+  id: string;
   playerShip: SPlayerShip;
   elapsedTime: number;
   playerShipMoveCallbacks: ISPlayerShipMoveCallback[];
   moveShip: SMoveObject;
   spriteManager: ITKSpriteManager;
-  constructor(newPlayerShipRepository: SPlayerShipRepository,
+
+  constructor(newId:string, newPlayerShipRepository: SPlayerShipRepository,
       newCallbacks:ISPlayerShipMoveCallback[], newSpriteManager: ITKSpriteManager) {
+    this.id = newId;
     this.playerShip = newPlayerShipRepository.getPlayerShip();
     this.elapsedTime = 0;
     this.playerShipMoveCallbacks = newCallbacks;

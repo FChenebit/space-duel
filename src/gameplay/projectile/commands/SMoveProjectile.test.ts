@@ -27,7 +27,7 @@ describe('SMoveProjectile', () => {
       new SWeapon('3', 100, 20000, 10, 200, SProjectileTypeEnum.MINE, SFactionTypeEnum.PLAYER));
   playerRepository.setPlayerShip(newPlayerShip);
   const fixIdGenerator = new FixIDGenerator();
-  const moveProjectile = new SMoveProjectile(projectileRepository,enemyShipRepository,playerRepository);
+  const moveProjectile = new SMoveProjectile(fixIdGenerator.generate(), projectileRepository,enemyShipRepository,playerRepository);
 
 
 

@@ -11,7 +11,8 @@ export interface SGameOverParameter {
 
 export class SGameOver implements ITKUpdateControllerCallback {
 
-  private remainingTime:number;
+  id: string;
+  private remainingTime: number;
   private readonly quitgame : SQuitGame;
   private readonly spriteManager : ITKSpriteManager;
   private gameW: number;
@@ -19,8 +20,9 @@ export class SGameOver implements ITKUpdateControllerCallback {
   private updateController: TKController<ITKUpdateControllerCallback>;
   private alreadyLaunched : boolean;
 
-  constructor(newQuitGame : SQuitGame, newSpriteManager:ITKSpriteManager, newGameW:number, newGameH:number,
-        newUpdateControler:TKController<ITKUpdateControllerCallback>) {
+  constructor(newId : string, newQuitGame : SQuitGame, newSpriteManager:ITKSpriteManager, newGameW:number, newGameH:number,
+    newUpdateControler: TKController<ITKUpdateControllerCallback>) {
+    this.id = newId;
     this.spriteManager = newSpriteManager;
     this.remainingTime = GAME_OVER_TIME;
     this.quitgame = newQuitGame;    

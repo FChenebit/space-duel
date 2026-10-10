@@ -1,3 +1,4 @@
+import { FixIDGenerator } from "../../../core/adapters/fix-id-generator";
 import { SIdentifiableRepository } from "../../../core/adapters/SIdentifiableRepository";
 import { SFactionTypeEnum } from "../../../core/type/SFaction";
 import { SProjectileTypeEnum } from "../../projectile/entity/SProjectile";
@@ -7,10 +8,12 @@ import { SReloadAllWeapons } from "./SReloadAllWeapons";
 describe('SReloadAllWeapons', () => {
   let weaponsRepository: SIdentifiableRepository<SWeapon>;
   let reloadAllWeapons: SReloadAllWeapons;
+  let idGenerator: FixIDGenerator;
 
   beforeEach(() => {
+    idGenerator = new FixIDGenerator();
     weaponsRepository = new SIdentifiableRepository<SWeapon>();
-    reloadAllWeapons = new SReloadAllWeapons(weaponsRepository);
+    reloadAllWeapons = new SReloadAllWeapons(idGenerator.generate(), weaponsRepository);
   });
 
   describe('constructor', () => {

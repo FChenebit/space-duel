@@ -15,12 +15,15 @@ export interface SIAEnemyShipParameter {
 
 export class SIAEnemyShip implements ITKUpdateControllerCallback {
 
+  id: string;
   enemyShipRepository: SIdentifiableRepository<SEnemyShip>;
   playerShipRepository: SPlayerShipRepository;
   moveShip: SMoveObject;
   elapsedTime: number;
   followObject: SFollowObject;
-  constructor(newEnemyShipRepository: SIdentifiableRepository<SEnemyShip>, newPlayerShipRepository: SPlayerShipRepository) {
+
+  constructor(newId: string, newEnemyShipRepository: SIdentifiableRepository<SEnemyShip>, newPlayerShipRepository: SPlayerShipRepository) {
+    this.id = newId;
     this.enemyShipRepository = newEnemyShipRepository;
     this.playerShipRepository = newPlayerShipRepository;
     this.moveShip = new SMoveObject();

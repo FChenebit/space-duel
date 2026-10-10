@@ -14,8 +14,9 @@ describe('SIAEnemyShip', () => {
 
   const repository = new SIdentifiableRepository<SEnemyShip>();
   const playerRepository = new SPlayerShipRepository();
+  const idGenerator = new FixIDGenerator();
 
-  const newEnemyShip = new SNewEnemyShip(repository, new FixIDGenerator(),new TestSpriteManager(), new SIdentifiableRepository<SWeapon>(),
+  const newEnemyShip = new SNewEnemyShip(repository, idGenerator,new TestSpriteManager(), new SIdentifiableRepository<SWeapon>(),
      new SIdentifiableRepository<SProjectile>());
   newEnemyShip.execute(0,200,0,Math.PI/8,SEnemyShipTypeEnum.HUNTER);
   newEnemyShip.execute(0,200,0,Math.PI/16,SEnemyShipTypeEnum.HUNTER);
@@ -27,7 +28,7 @@ describe('SIAEnemyShip', () => {
   playerRepository.setPlayerShip(newPlayerShip);
 
 
-  const iaEnemyShip = new SIAEnemyShip(repository,playerRepository);
+  const iaEnemyShip = new SIAEnemyShip(idGenerator.generate(), repository,playerRepository);
 
   function testEnemyShipRotation(enemyShip: SEnemyShip, expectedRotation: number, x: number, y: number, initialRotation: number) {
     enemyShip.x = x;

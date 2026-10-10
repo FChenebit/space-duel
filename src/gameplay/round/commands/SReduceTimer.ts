@@ -10,12 +10,15 @@ export interface SReduceTimerParameter {
 
 export class SReduceTimer implements ITKUpdateControllerCallback {
 
-  private readonly roundRepositopry : SRoundRepository;
+  
+  id: string;
+  private readonly roundRepositopry: SRoundRepository;
   private readonly spriteManager : ITKSpriteManager;
   private readonly gameOver : SGameOver;
 
-  constructor(newSRoundRepository : SRoundRepository, newSpriteManager : ITKSpriteManager,
-      newGameOver:SGameOver) {
+  constructor(newId : string, newSRoundRepository : SRoundRepository, newSpriteManager : ITKSpriteManager,
+    newGameOver: SGameOver) {
+    this.id = newId;
     this.roundRepositopry = newSRoundRepository;
     this.spriteManager = newSpriteManager;
     this.gameOver = newGameOver;

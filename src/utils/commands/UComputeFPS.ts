@@ -7,9 +7,11 @@ export interface UComputeFPSParameter {
 
 export class UComputeFPS implements ITKUpdateControllerCallback {
 
+  id: string;
   elapsedTime: number;
   frameCount: number;
-  constructor() {
+  constructor(newId: string) {
+    this.id = newId;
     this.elapsedTime = 0;
     this.frameCount = 0;
   }

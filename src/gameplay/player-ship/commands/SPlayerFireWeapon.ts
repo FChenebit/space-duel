@@ -18,6 +18,7 @@ export interface SPlayerFireWeaponParameter {
 
 export class SPlayerFireWeapon implements ITKKeyboardControllerCallback {
 
+  id: string;
   idGenerator: IIDGenerator;
   spriteManager: ITKSpriteManager;
   playerShip: SPlayerShip;
@@ -26,8 +27,9 @@ export class SPlayerFireWeapon implements ITKKeyboardControllerCallback {
   fireMissile: SFireWeapon;
   fireMine: SFireWeapon;
 
-  constructor(newIdGenerator: IIDGenerator, newSpriteManager: ITKSpriteManager, 
+  constructor(newId: string, newIdGenerator: IIDGenerator, newSpriteManager: ITKSpriteManager, 
           newPlayerShipRepository: SPlayerShipRepository, newProjectileRepository: SIdentifiableRepository<SProjectile>) {
+    this.id = newId;
     this.idGenerator = newIdGenerator;
     this.spriteManager = newSpriteManager;
     this.playerShip = newPlayerShipRepository.getPlayerShip();

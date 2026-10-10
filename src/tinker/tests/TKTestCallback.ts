@@ -3,6 +3,12 @@ import { TKTestCallbackParameter } from "./TKTestCallbackParameter";
 
 export class TKTestCallback implements ITKControllerCallback {
 
+  id: string;
+
+  constructor(newId: string) {
+    this.id = newId;
+  }
+
   public onTest(testCallbackParameter: TKTestCallbackParameter) {
     console.log('test callback activated with parameter step 1 : ' + JSON.stringify(testCallbackParameter));
     testCallbackParameter.testValue += 1;

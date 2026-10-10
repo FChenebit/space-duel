@@ -9,12 +9,14 @@ const TIMER_DISPLAY_Y = 50;
 
 export class SInitRound implements ITKInitControllerCallback {
 
+  id: string;
   private readonly roundRepository : SRoundRepository;
   private readonly spriteManager : ITKSpriteManager;
   private readonly gameWidth: number;
 
-  constructor(newRoundRepository : SRoundRepository,
-    newSpriteManager: ITKSpriteManager, newGameWidth : number) {
+  constructor(newId : string, newRoundRepository : SRoundRepository,
+    newSpriteManager: ITKSpriteManager, newGameWidth: number) {
+    this.id = newId;
     this.roundRepository = newRoundRepository;
     this.spriteManager = newSpriteManager;
     this.gameWidth = newGameWidth;

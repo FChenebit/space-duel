@@ -17,15 +17,19 @@ export interface STestCollisionParameter {
 }
 
 export class STestCollision implements ITKUpdateControllerCallback {
+
+  id: string;
   projectileRepository: SIdentifiableRepository<SProjectile>;
   enemyShipRepository: SIdentifiableRepository<SEnemyShip>;
   playerShipRepository: SPlayerShipRepository;
   gameOver: SGameOver;
   removeProjectile: SRemoveProjectile;
   removeEnemyShip: SRemoveEnemyShip;
-  constructor(newProjectileRepository: SIdentifiableRepository<SProjectile>, newEnemyShipRepository: SIdentifiableRepository<SEnemyShip>,
+
+  constructor(newId : string, newProjectileRepository: SIdentifiableRepository<SProjectile>, newEnemyShipRepository: SIdentifiableRepository<SEnemyShip>,
         newPlayerShipRepository: SPlayerShipRepository, newGameOver: SGameOver,
-        newRemoveProjectile: SRemoveProjectile, newRemoveEnemyShip: SRemoveEnemyShip) {
+    newRemoveProjectile: SRemoveProjectile, newRemoveEnemyShip: SRemoveEnemyShip) {
+    this.id = newId;
     this.projectileRepository = newProjectileRepository;
     this.enemyShipRepository = newEnemyShipRepository;
     this.playerShipRepository = newPlayerShipRepository;

@@ -11,13 +11,15 @@ export interface SSteerPlayerShipParameter {
 
 export class SSteerPlayerShip implements ITKMouseControllerCallback {
 
+  id: string;
   sceneWidth: number;
   sceneHeight: number;
   spriteManager: ITKSpriteManager;
   playerShip: SPlayerShip;
   navigationBar: SNavigationBar;
 
-  constructor(newPlayerShipRepository: SPlayerShipRepository, newSceneWidth:number, newSceneHeight:number,newSpriteManager : ITKSpriteManager) {
+  constructor(newId: string, newPlayerShipRepository: SPlayerShipRepository, newSceneWidth: number, newSceneHeight: number, newSpriteManager: ITKSpriteManager) {
+    this.id = newId;
     this.playerShip = newPlayerShipRepository.getPlayerShip();
     this.navigationBar = newPlayerShipRepository.getNavigationBar();
     this.sceneWidth = newSceneWidth;

@@ -6,9 +6,11 @@ import { SEnemyShip } from "../entities/SEnemyShip";
 
 export class SFireEnemyShip implements ITKUpdateControllerCallback {
 
+  id: string;
   enemysShipRepository: SIdentifiableRepository<SEnemyShip>;
 
-  constructor(newEnemysShipRepository: SIdentifiableRepository<SEnemyShip>) {
+  constructor(newId: string, newEnemysShipRepository: SIdentifiableRepository<SEnemyShip>) {
+    this.id = newId;
     this.enemysShipRepository = newEnemysShipRepository;
   }
  // eslint-disable-next-line @typescript-eslint/no-unused-vars

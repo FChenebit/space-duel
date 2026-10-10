@@ -8,9 +8,11 @@ export interface SReloadAllWeaponsParameter {
 
 export class SReloadAllWeapons implements ITKUpdateControllerCallback {
 
+  id: string;
   weaponsRepository: SIdentifiableRepository<SWeapon>;
 
-  constructor(newWeaponsRepository: SIdentifiableRepository<SWeapon>) {
+  constructor(newId: string, newWeaponsRepository: SIdentifiableRepository<SWeapon>) {
+    this.id = newId;
     this.weaponsRepository = newWeaponsRepository;
   }
 

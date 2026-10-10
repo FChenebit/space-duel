@@ -44,6 +44,7 @@ import { SReduceTimer } from '../gameplay/round/commands/SReduceTimer';
 import { NavigateFunction } from 'react-router-dom';
 import { SQuitGame } from '../gameplay/round/commands/SQuitGame';
 import { SGameOver } from '../gameplay/round/commands/SGameOver';
+import { FixIDGenerator } from '../core/adapters/fix-id-generator';
 
 export class GameScene extends Phaser.Scene {
   initController: TKController<ITKInitControllerCallback>;
@@ -93,16 +94,18 @@ export class GameScene extends Phaser.Scene {
     //console.log('W : ' + gameW + ' H : ' + gameH);
     //console.log('level ' + this.level);
 
+    const idGenerator = new FixIDGenerator();
+
     const newPlayerShipRepository = new SPlayerShipRepository();
     const newRoundRepository = new SRoundRepository();
     const newWeaponRepository = new SIdentifiableRepository<SWeapon>();
     const newProjectileRepository = new SIdentifiableRepository<SProjectile>();
     const newEnemyShipRepository = new SIdentifiableRepository<SEnemyShip>();
 
-    const initPlayerShip = new SInitPlayerShip(new RandomIDGenerator(), 
+    const initPlayerShip = new SInitPlayerShip(idGenerator.generate(), new RandomIDGenerator(), 
     newPlayerShipRepository,gameW,gameH,this.spriteManager, newWeaponRepository, this.playerEnhancement);
     this.initController.addCallback(initPlayerShip);
-    const initRound = new SInitRound(newRoundRepository,this.spriteManager, gameW);
+    const initRound = new SInitRound(idGenerator.generate(), newRoundRepository,this.spriteManager, gameW);
     this.initController.addCallback(initRound);
     
     /*this.spriteManager.newText('TFCTFC', gameW/2,50,{
@@ -124,11 +127,11 @@ export class GameScene extends Phaser.Scene {
     //});
 
 
-    const steerPlayerShip = new SSteerPlayerShip(newPlayerShipRepository,gameW,gameW,this.spriteManager);
+    const steerPlayerShip = new SSteerPlayerShip(idGenerator.generate(), newPlayerShipRepository,gameW,gameW,this.spriteManager);
     this.mouseController.addCallback(steerPlayerShip);
     
-    const acceleratePlayerShip = new SAcceleratePlayerShip(newPlayerShipRepository,gameH,this.spriteManager);
-    const playerFireWeapon = new SPlayerFireWeapon(new RandomIDGenerator(), this.spriteManager, newPlayerShipRepository,
+    const acceleratePlayerShip = new SAcceleratePlayerShip(idGenerator.generate(),newPlayerShipRepository,gameH,this.spriteManager);
+    const playerFireWeapon = new SPlayerFireWeapon(idGenerator.generate(), new RandomIDGenerator(), this.spriteManager, newPlayerShipRepository,
      newProjectileRepository);
     this.keyboardController.addCallback(playerFireWeapon);
     this.keyboardController.addCallback(acceleratePlayerShip);
@@ -138,20 +141,20 @@ export class GameScene extends Phaser.Scene {
     const displayProjectile = new SDisplayProjectile(newProjectileRepository, this.spriteManager, gameW, gameH);
     const moveCallbacks = [moveBackground, displayEnemyShip,displayProjectile];
 
-    const movePlayerShip = new SMovePlayerShip(newPlayerShipRepository,moveCallbacks, this.spriteManager);
-    const iaEnemyShip = new SIAEnemyShip(newEnemyShipRepository, newPlayerShipRepository);
-    const moveProjectile = new SMoveProjectile(newProjectileRepository,newEnemyShipRepository,newPlayerShipRepository);
+    const movePlayerShip = new SMovePlayerShip(idGenerator.generate(), newPlayerShipRepository,moveCallbacks, this.spriteManager);
+    const iaEnemyShip = new SIAEnemyShip(idGenerator.generate(), newEnemyShipRepository, newPlayerShipRepository);
+    const moveProjectile = new SMoveProjectile(idGenerator.generate(), newProjectileRepository,newEnemyShipRepository,newPlayerShipRepository);
     const newRemoveProjectile = new SRemoveProjectile(newProjectileRepository, this.spriteManager);
     const newRemoveEnemyShip = new SRemoveEnemyShip(newEnemyShipRepository, this.spriteManager);
     const quitGame = new SQuitGame(this.navigator);
-    const gameOver = new SGameOver(quitGame,this.spriteManager,gameW,gameH,this.updateController);
-    const reduceTimer = new SReduceTimer(newRoundRepository,this.spriteManager,gameOver);
-    const testCollision = new STestCollision(newProjectileRepository, newEnemyShipRepository,
+    const gameOver = new SGameOver(idGenerator.generate(), quitGame,this.spriteManager,gameW,gameH,this.updateController);
+    const reduceTimer = new SReduceTimer(idGenerator.generate(), newRoundRepository,this.spriteManager,gameOver);
+    const testCollision = new STestCollision(idGenerator.generate(), newProjectileRepository, newEnemyShipRepository,
       newPlayerShipRepository, gameOver,
       newRemoveProjectile, newRemoveEnemyShip);
-    const reloadAllWeapons = new SReloadAllWeapons(newWeaponRepository);
-    const fireEnemyShip = new SFireEnemyShip(newEnemyShipRepository);
-    const computeFPS = new UComputeFPS();
+    const reloadAllWeapons = new SReloadAllWeapons(idGenerator.generate(), newWeaponRepository);
+    const fireEnemyShip = new SFireEnemyShip(idGenerator.generate(), newEnemyShipRepository);
+    const computeFPS = new UComputeFPS(idGenerator.generate());
     this.updateController.addCallback(movePlayerShip);
     this.updateController.addCallback(iaEnemyShip);
     this.updateController.addCallback(moveProjectile);

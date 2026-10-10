@@ -12,16 +12,19 @@ export interface SMoveProjectileParameter {
 }
 
 export class SMoveProjectile implements ITKUpdateControllerCallback {
+  id: string;
   projectileRepository: SIdentifiableRepository<SProjectile>;
   enemyShipRepository: SIdentifiableRepository<SEnemyShip>;
   playerShipRepository: SPlayerShipRepository;
   moveProjectile: SMoveObject;
   followShip: SFollowObject;
   elapsedTime: number;
-  constructor(newProjectileRepository: SIdentifiableRepository<SProjectile>, 
+  
+  constructor(newId:string, newProjectileRepository: SIdentifiableRepository<SProjectile>, 
     newEnemyShipRepository: SIdentifiableRepository<SEnemyShip>, newPlayerShipRepository: SPlayerShipRepository
   ) {
     
+    this.id = newId;
     this.projectileRepository = newProjectileRepository;
     this.enemyShipRepository = newEnemyShipRepository;
     this.playerShipRepository = newPlayerShipRepository;

@@ -27,6 +27,7 @@ const MAX_PLAYER_SHIP_SPEED = 150;
 
 export class SInitPlayerShip implements ITKInitControllerCallback {
 
+  id: string;
   private readonly idGenerator: IIDGenerator;
   private readonly playerShipRepository : SPlayerShipRepository;
   private readonly sceneWidth: number;
@@ -35,10 +36,11 @@ export class SInitPlayerShip implements ITKInitControllerCallback {
   private readonly weaponRepository: SIdentifiableRepository<SWeapon>;
   private readonly playerShipEnhancement: SPlayerShipEnhancement
 
-  constructor(newIdGenerator: IIDGenerator, newPlayerShipRepository: SPlayerShipRepository,
+  constructor(newId: string, newIdGenerator: IIDGenerator, newPlayerShipRepository: SPlayerShipRepository,
       newSceneWidth: number, newSceneHeight: number,
       newSpriteManager: ITKSpriteManager, newWeaponRepository: SIdentifiableRepository<SWeapon>,
-      newPlayerShipEnhancement: SPlayerShipEnhancement) {
+    newPlayerShipEnhancement: SPlayerShipEnhancement) {
+    this.id = newId;
     this.idGenerator = newIdGenerator;
     this.playerShipRepository = newPlayerShipRepository;
     this.sceneWidth = newSceneWidth;

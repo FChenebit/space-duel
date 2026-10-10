@@ -14,13 +14,15 @@ export interface SAcceleratePlayerShipParameter {
 }
 
 export class SAcceleratePlayerShip implements ITKKeyboardControllerCallback {
+  id: string;
   playerShip: SPlayerShip;
   speedBar: SSpeedBar;
   spriteManager: ITKSpriteManager;
   sceneHeight: number;
 
-  constructor(newPlayerShipRepository: SPlayerShipRepository, newSceneHeight: number, 
-      newSpriteManager: ITKSpriteManager) {
+  constructor(newId: string, newPlayerShipRepository: SPlayerShipRepository, newSceneHeight: number, 
+    newSpriteManager: ITKSpriteManager) {
+    this.id = newId;
     this.playerShip = newPlayerShipRepository.getPlayerShip();
     this.speedBar = newPlayerShipRepository.getSpeedBar();
     this.spriteManager = newSpriteManager;
